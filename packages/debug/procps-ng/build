@@ -1,6 +1,8 @@
+#!/bin/sh
+
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2013 Dag Wieers (dag@wieers.com)
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,25 +20,18 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="service.openelec.settings"
-PKG_VERSION="0.1.16"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="prop."
-PKG_SITE="http://www.openelec.tv"
-PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.zip"
-PKG_DEPENDS="connman hd-idle"
-PKG_BUILD_DEPENDS="toolchain python"
-PKG_PRIORITY="optional"
-PKG_SECTION="mediacenter"
-PKG_SHORTDESC="service.openelec.settings: Settings dialog for OpenELEC"
-PKG_LONGDESC="service.openelec.settings: is a settings dialog for OpenELEC"
-PKG_IS_ADDON="no"
+. config/options $1
 
-PKG_AUTORECONF="no"
+export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/ncurses"
+export LIBS="-ltinfo"
 
-if [ "$DISPLAYSERVER" = "xorg-server" ]; then
-  PKG_DEPENDS="$PKG_DEPENDS setxkbmap"
-else
-  PKG_DEPENDS="$PKG_DEPENDS bkeymaps"
-fi
+cd $PKG_BUILD
+ac_cv_func_malloc_0_nonnull=yes \
+ac_cv_func_realloc_0_nonnull=yes \
+./configure --host=$TARGET_NAME \
+            --build=$HOST_NAME \
+            --prefix=/usr \
+            --disable-skill \
+            --disable-kill
+
+make

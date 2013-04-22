@@ -18,25 +18,19 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="service.openelec.settings"
-PKG_VERSION="0.1.16"
+PKG_NAME="screen"
+PKG_VERSION="4.0.3"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="prop."
-PKG_SITE="http://www.openelec.tv"
-PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.zip"
-PKG_DEPENDS="connman hd-idle"
-PKG_BUILD_DEPENDS="toolchain python"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.gnu.org/software/screen/"
+PKG_URL="http://ftp.gnu.org/gnu/screen/screen-${PKG_VERSION}.tar.gz"
+PKG_DEPENDS="ncurses"
+PKG_BUILD_DEPENDS="toolchain ncurses"
 PKG_PRIORITY="optional"
-PKG_SECTION="mediacenter"
-PKG_SHORTDESC="service.openelec.settings: Settings dialog for OpenELEC"
-PKG_LONGDESC="service.openelec.settings: is a settings dialog for OpenELEC"
-PKG_IS_ADDON="no"
+PKG_SECTION="shell/console"
+PKG_SHORTDESC="terminal multiplexor with VT100/ANSI terminal emulation"
+PKG_LONGDESC="screen is a terminal multiplexor that runs several separate "screens" on a single physical character-based terminal. Each virtual terminal emulates a DEC VT100 plus several ANSI X3.64 and ISO 2022 functions. Screen sessions can be detached and resumed later on a different terminal."
 
-PKG_AUTORECONF="no"
-
-if [ "$DISPLAYSERVER" = "xorg-server" ]; then
-  PKG_DEPENDS="$PKG_DEPENDS setxkbmap"
-else
-  PKG_DEPENDS="$PKG_DEPENDS bkeymaps"
-fi
+PKG_IS_ADDON="yes"
+PKG_ADDON_TYPE="xbmc.python.script"
