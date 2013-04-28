@@ -11,7 +11,7 @@
   <video>
     <defaultplayer>omxplayer</defaultplayer>
     <defaultdvdplayer>omxplayer</defaultdvdplayer>
-    <allowhi10pmultithreading>true</allowhi10pmultithreading>
+    <busydialogdelayms>750</busydialogdelayms>
   </video>
 
   <audio>
