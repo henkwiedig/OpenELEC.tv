@@ -1,0 +1,52 @@
+--- a/Makefile_orig	2014-05-23 17:08:55.000000000 +0200
++++ b/Makefile	2014-05-23 17:09:23.000000000 +0200
+@@ -12,22 +12,15 @@
+ ### The directory environment:
+ 
+ # Use package data if installed...otherwise assume we're under the VDR source directory:
+-PKGCFG = $(if $(VDRDIR),$(shell pkg-config --variable=$(1) $(VDRDIR)/vdr.pc),$(shell pkg-config --variable=$(1) vdr || pkg-config --variable=$(1) ../../../vdr.pc))
+-
+-LIBDIR = $(call PKGCFG,libdir)
+-LOCDIR = $(call PKGCFG,locdir)
+-PLGCFG = $(call PKGCFG,plgcfg)
+-#
+ TMPDIR ?= /tmp
+ 
+ ### The compiler options:
+ 
+-export CFLAGS   += $(call PKGCFG,cflags)
+-export CXXFLAGS += $(call PKGCFG,cxxflags) -Wno-unused-result -Wunused-variable
++include $(VDRDIR)/Make.global
+ 
+ ### The version number of VDR's plugin API:
+ 
+-APIVERSION = $(call PKGCFG,apiversion)
++APIVERSION = $(shell sed -ne '/define APIVERSION/s/^.*"\(.*\)".*$$/\1/p' $(VDRDIR)/config.h)
+ 
+ ### Allow user defined options to overwrite defaults:
+ 
+@@ -36,7 +29,7 @@
+ #DEFINES += -D_IMG_LINK
+ 
+ LIBS = $(HLIB) $(shell mysql_config --libs_r) -luuid -lcrypto 
+-EPG2VDR_DATA_DIR = "/var/cache/vdr"
++EPG2VDR_DATA_DIR = "/storage/.xbmc/userdata/addon_data/service.multimedia.vdr-addon/cache"
+ 
+ ifdef EPG2VDR_DATA_DIR
+ DEFINES += -DEPG2VDR_DATA_DIR='$(EPG2VDR_DATA_DIR)'
+@@ -53,6 +46,7 @@
+ 
+ ### Includes and Defines (add further entries here):
+ 
++INCLUDES += -I$(VDRDIR)/include
+ INCLUDES += $(shell mysql_config --include)
+ 
+ DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"' -DLOG_PREFIX='"$(PLUGIN): "'
+@@ -113,6 +107,7 @@
+ 
+ $(SOFILE): hlib $(OBJS)
+ 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared $(OBJS) $(LIBS) -o $@
++	@cp $@ $(LIBDIR)/$@.$(APIVERSION)
+ 
+ install-lib: $(SOFILE)
+ 	install -D -m644 $^ $(DESTDIR)$(LIBDIR)/$^.$(APIVERSION)

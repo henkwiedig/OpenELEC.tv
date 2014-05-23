@@ -18,6 +18,7 @@
     <setting id="ENABLE_XMLTV2VDR" value="false" />
     <setting id="ENABLE_DUMMYDEVICE" value="false" />
     <setting id="ENABLE_SATIP" value="false" />
+    <setting id="ENABLE_EPG2VDR" value="false" />
     <setting id="ENABLE_EXTERNAL_RECCMD" value="false" />
     <setting id="EXTERNAL_RECCMD_PATH" value="" />
     <setting id="ENABLE_CHARSET_OVERRIDE" value="false" />
