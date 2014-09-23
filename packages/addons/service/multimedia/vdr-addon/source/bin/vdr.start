@@ -88,7 +88,7 @@ if [ "$ENABLE_SOFTCAM" == "true" ] ; then
 fi
 VDR_ARG="$VDR_ARG -P wirbelscan -P wirbelscancontrol"
 if [ "$ENABLE_IPTV" == "true" ] ; then
-  VDR_ARG="$VDR_ARG -P iptv"
+  VDR_ARG="$VDR_ARG -P 'iptv -d $IPTV_NUM_DEVICES'"
 fi
 if [ "$ENABLE_STREAMDEV_SERVER" == "true" ] ; then
   VDR_ARG="$VDR_ARG -P streamdev-server"
@@ -138,6 +138,7 @@ VDR_ARG="$VDR_ARG -P $PVR_PLUGIN"
 
 cd $ADDON_DIR/config
 mkdir -p $ADDON_CONFIG_DIR
+mkdir -p "$VDR_VIDEO_DIR"
 
 for dir in `find . -type d`; do
   mkdir -p $ADDON_CONFIG_DIR/$dir
@@ -157,11 +158,6 @@ for driver_dvb in $(find /storage/.xbmc/addons/driver.dvb.*/bin/userspace-driver
   . $driver_dvb
 done
 
-# (wait for) at least 1 adapter (xbmc allows to set 0)
-# xbmc allows "numeric" type field to be empty. lets handle thaat
-[ "$NUM_ADAPTERS" = "" ] && NUM_ADAPTERS=1
-# 0 does not make sense. should be 1 or more
-[ $NUM_ADAPTERS -lt 1 ] && NUM_ADAPTERS=1
 if [ "$WAIT_FOR_FEINIT" == "true" ] ; then
   while [ true ] ; do
     if [ -e /dev/dvb/adapter$((NUM_ADAPTERS-1))/frontend0 ] ; then

@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="samba"
-PKG_VERSION="3.6.23"
+PKG_VERSION="3.6.24"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -68,7 +68,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            --disable-krb5developer \
                            --disable-picky-developer \
                            --enable-largefile \
-                           --with-pthreads \
                            --disable-socket-wrapper \
                            --disable-nss-wrapper \
                            --disable-swat \
@@ -80,8 +79,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            --disable-dnssd \
                            $SMB_AVAHI \
                            --disable-pthreadpool \
-                           --enable-gnutls \
-                           --disable-netapi \
                            --disable-dmalloc \
                            --with-fhs \
                            --without-libtalloc \
@@ -95,14 +92,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            --without-afs \
                            --without-fake-kaserver \
                            --without-vfs-afsacl \
-                           --without-dce-dfs \
                            --without-ldap \
                            --without-ads \
                            --without-dnsupdate \
                            --without-automount \
-                           --without-cifsmount \
-                           --without-cifsumount \
-                           --without-cifsupcall \
                            --without-krb5 \
                            --without-pam \
                            --without-pam_smbpass \
@@ -119,9 +112,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            --without-wbclient \
                            --without-winbind \
                            --with-included-popt \
-                           --with-included-iniparser \
-                           --without-sqlite3 \
-                           --without-setproctitle"
+                           --with-included-iniparser"
 
 pre_configure_target() {
   ( cd ../source3
@@ -129,6 +120,7 @@ pre_configure_target() {
   )
 
   CFLAGS="$CFLAGS -fPIC -DPIC"
+  LDFLAGS="$LDFLAGS -fwhole-program"
 }
 
 make_target() {

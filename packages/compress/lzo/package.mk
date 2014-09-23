@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="lzo"
-PKG_VERSION="2.06"
+PKG_VERSION="2.08"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -33,4 +33,5 @@ PKG_LONGDESC="LZO is a data compression library which is suitable for data de-/c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"

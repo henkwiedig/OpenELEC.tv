@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mpc"
-PKG_VERSION="1.0.1"
+PKG_VERSION="1.0.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
@@ -33,7 +33,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
-                         --enable-shared \
-                         --disable-static \
+                         --enable-static --disable-shared \
                          --with-gmp=$ROOT/$TOOLCHAIN \
                          --with-mpfr=$ROOT/$TOOLCHAIN"

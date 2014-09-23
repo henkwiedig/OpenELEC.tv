@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libpng"
-PKG_VERSION="1.6.10"
+PKG_VERSION="1.6.12"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -37,7 +37,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --enable-static \
                            --disable-shared"
 
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
+
 pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
   export CPPFLAGS="$CPPFLAGS -I$ROOT/$TOOLCHAIN/include"
 }
 
